@@ -13,6 +13,7 @@ import time
 import pycurl
 import json
 from StringIO import StringIO
+from PIL import Image, ImageTk
 
 __author__ = "onamaya"
 __date__ = "$30-oct-2015 17:11:18$"
@@ -61,9 +62,9 @@ class Application(tk.Frame):
         
         
         # Car Name
-        carLabel = GenericLabel(    master=self, posX=450, posY=350, height=110, width=350, 
-                                    dataSource=self.dataSource, dataFieldName="MCARNAME", defaultValue='-', labelFontName='Digital-7',
-                                    labelFontSize=45, labelColor='#ffc90e', subLabelFontName='Digital-7')
+        carLabel = GenericLabel(    master=self, posX=400, posY=350, height=110, width=550, 
+                                    dataSource=self.dataSource, dataFieldName="MCARNAME", defaultValue='-', labelFontName='Digital-7 Mono',
+                                    labelFontSize=45, labelColor='#ffc90e', subLabelFontName='Digital-7 Mono')
         carLabel.place()
         self.addItem(carLabel)
         
@@ -71,25 +72,25 @@ class Application(tk.Frame):
         # Speed
         speedLabel = GenericLabel(  master=self, posX=550, posY=10, height=110, width=180, 
                                     #subLabelName="SPEED",  subLabelColor='#ffc90e', subLabelFontSize=12, 
-                                    dataSource=self.dataSource, dataFieldName="MSPEED", defaultValue='0',  labelFontName='Digital-7',
-                                    labelFontSize=50, labelColor='#ffc90e', subLabelFontName='Digital-7',
+                                    dataSource=self.dataSource, dataFieldName="MSPEED", defaultValue='0',  labelFontName='Digital-7 Mono',
+                                    labelFontSize=50, labelColor='#ffc90e', subLabelFontName='Digital-7 Mono',
                                     transFunc=lambda x: int(x*3.6))
         speedLabel.place()
         self.addItem(speedLabel)
         
         #Rpms
-        rpmLabel = GenericLabel(    master=self, posX=85, posY=10, height=50, width=180, 
-                                    subLabelName="RPM", subLabelFontSize=40, subLabelColor='#80FF00', subLabelSide=tk.LEFT, labelFontName='Digital-7',
-                                    dataSource=self.dataSource, dataFieldName="MRPM", defaultValue='0',  subLabelFontName='Digital-7',
-                                    labelFontSize=30, labelColor='#ffc90e',
-                                    transFunc=lambda x: int(round(x)))
+        rpmLabel = GenericLabel(    master=self, posX=95, posY=20, height=50, width=280, 
+                                    subLabelName="RPM ", subLabelFontSize=35, subLabelColor='#80FF00', subLabelSide=tk.LEFT, labelFontName='Digital-7 Mono',
+                                    dataSource=self.dataSource, dataFieldName="MRPM", defaultValue='0',  subLabelFontName='Digital-7 Mono',
+                                    labelFontSize=50, labelColor='#ffc90e',
+                                    transFunc=lambda x: str(int(round(x))).rjust(5))
         rpmLabel.place()
         self.addItem(rpmLabel)
         
         # Gear
         gearLabel = GenericLabel(   master=self, posX=550, posY=100, height=250, width=180, 
-                                    #subLabelName="GEAR", subLabelColor='#0f0', subLabelFontSize=20,  subLabelFontName='Digital-7'
-                                    dataSource=self.dataSource, dataFieldName="MGEAR", defaultValue='N',  labelFontName='Digital-7',
+                                    #subLabelName="GEAR", subLabelColor='#0f0', subLabelFontSize=20,  subLabelFontName='Digital-7 Mono'
+                                    dataSource=self.dataSource, dataFieldName="MGEAR", defaultValue='N',  labelFontName='Digital-7 Mono',
                                     labelFontSize=200, labelColor='#ffc90e',
                                     transFunc=lambda x: 'N' if x == 0 else ('R' if x == -1 else str(x)))
         gearLabel.place()
@@ -99,8 +100,8 @@ class Application(tk.Frame):
         # Fuel Bar
         fuelBar = BarLabel(     master=self, posX=85, posY=560, height=150, width=82, 
                                 subLabelName="FUEL", dataSource=self.dataSource, dataFieldName="MFUELLEVEL",
-                                subLabelFontSize=25, subLabelFontName = 'Digital-7',
-                                barColor='red', subLabelColor='#80FF00',
+                                subLabelFontSize=25, subLabelFontName = 'Digital-7 Mono',
+                                barColor='#804040', subLabelColor='#80FF00',
                                 transFunc=lambda x: x*100)   
                                 
                                     
@@ -109,9 +110,9 @@ class Application(tk.Frame):
         
         
         # Session Info
-        posLabel = GenericLabel(    master=self, posX=850, posY=20, height=80, width=250, 
-                                    subLabelName="POS", subLabelFontSize=40, subLabelColor='#80FF00', subLabelSide=tk.LEFT, labelFontName='Digital-7',
-                                    dataSource=self.dataSource, dataFieldName="EXT_MPOSITION", defaultValue='0',  subLabelFontName='Digital-7',
+        posLabel = GenericLabel(    master=self, posX=775, posY=20, height=80, width=250, 
+                                    subLabelName="POS", subLabelFontSize=40, subLabelColor='#80FF00', subLabelSide=tk.LEFT, labelFontName='Digital-7 Mono',
+                                    dataSource=self.dataSource, dataFieldName="EXT_MPOSITION", defaultValue='0',  subLabelFontName='Digital-7 Mono',
                                     labelFontSize=50, labelColor='#ffc90e',)
         posLabel.place()
         self.addItem(posLabel)
@@ -126,14 +127,14 @@ class Application(tk.Frame):
         timesFontSize       = 35
         timesLabelFontSize  = 15
         timeHeight          = 95
-        timeWidth           = 200
+        timeWidth           = 210
         
-        pX = 1080
+        pX = 1050
         pY = 10
         
         lapTimeLabel = TimeLabel(   master=self, posX=pX, posY=pY, height=timeHeight, width=timeWidth, labelColor='#8ff',
                                     subLabelName="LAP TIME", dataSource=self.dataSource, dataFieldName="EXT_MCURRENTTIME", 
-                                    labelFontSize=timesFontSize, subLabelFontSize=timesLabelFontSize,  labelFontName='Digital-7',
+                                    labelFontSize=timesFontSize, subLabelFontSize=timesLabelFontSize,  labelFontName='Digital-7 Mono',
                                     subLabelColor='#8ff', condColor="#f00")
                                     
         lapTimeLabel.place()
@@ -142,7 +143,7 @@ class Application(tk.Frame):
         pY = pY + timeHeight
         lastTimeLabel = TimeLabel(  master=self, posX=pX, posY=pY, height=timeHeight, width=timeWidth, 
                                     subLabelName="LAST LAP TIME", dataSource=self.dataSource, dataFieldName="EXT_MLASTLAPTIME",
-                                    labelFontSize=timesFontSize, subLabelFontSize=timesLabelFontSize,  labelFontName='Digital-7',
+                                    labelFontSize=timesFontSize, subLabelFontSize=timesLabelFontSize,  labelFontName='Digital-7 Mono',
                                     subLabelColor='#0f0', condColor="#0f0")
                                     
         lastTimeLabel.place()
@@ -151,7 +152,7 @@ class Application(tk.Frame):
         pY = pY + timeHeight
         bestTimeLabel = TimeLabel(  master=self, posX=pX, posY=pY, height=timeHeight, width=timeWidth, 
                                     subLabelName="BEST LAP TIME", dataSource=self.dataSource, dataFieldName="MBESTLAPTIME", subLabelColor='#f8f',
-                                    labelFontSize=timesFontSize, subLabelFontSize=timesLabelFontSize, labelFontName='Digital-7', labelColor='#f8f')
+                                    labelFontSize=timesFontSize, subLabelFontSize=timesLabelFontSize, labelFontName='Digital-7 Mono', labelColor='#f8f')
                                     
         bestTimeLabel.place()
         self.addItem(bestTimeLabel)
@@ -170,8 +171,8 @@ class Application(tk.Frame):
 
         batteryBar = BarLabel(  master=self, posX=10, posY=10, height=700, width=70, 
                                 subLabelName="BAT", dataSource=self.dataSource, dataFieldName="MBOOSTAMOUNT",
-                                subLabelFontSize=25, subLabelFontName = 'Digital-7',
-                                barColor='#8080C0', subLabelColor='#80FF00')
+                                subLabelFontSize=25, subLabelFontName = 'Digital-7 Mono',
+                                barColor='#80FF80', subLabelColor='#80FF00')
                                     
         batteryBar.place()
         self.addItem(batteryBar)
@@ -181,7 +182,7 @@ class Application(tk.Frame):
         sectorGapTable = TableLabels(master=self, posX=90, posY=100, height=175, width=350, rows=1, columns=3, 
                                     dataSource=self.dataSource, dataFieldName="EXT_MSESSIONSECTORGAP", 
                                     labelColor='#8ff', labelFontSize=40,
-                                    tableLabelName="SESSION GAP", tableLabelFontSize=30, tableLabelColor='#8ff',  tableLabelFontName='Digital-7',
+                                    tableLabelName="SESSION GAP", tableLabelFontSize=30, tableLabelColor='#8ff',  tableLabelFontName='Digital-7 Mono',
                                     transFunc=lambda x: '--' if (x == -999999) else '{:.3f}'.format(x),
                                     colorTransFunc=lambda x: '#8ff' if (x == '--') else ('#f00' if (float(x) > 0.0) else '#0f0')
                                     )
@@ -204,44 +205,137 @@ class Application(tk.Frame):
         
         
         # Tyres Temp
-        tyreTempTable = TableLabels(master=self, posX=565, posY=575, height=150, width=150, rows=2, columns=2, 
-                                    dataSource=self.dataSource, dataFieldName="MTYRELAYERTEMP", 
-                                    labelColor='#8ff', labelFontSize=35,
-                                    tableLabelName="TYRE TEMP", tableLabelFontSize=20, tableLabelColor='#8ff',  tableLabelFontName='Digital-7',
-                                    transFunc=lambda x: int(x-273.15) if (x > 0) else '--')
+        tyreTempTable = TableLabels(master=self, posX=475, posY=500, height=225, width=225, rows=2, columns=2, 
+                                    dataSource=self.dataSource, dataFieldName="MTYRETREADTEMP", 
+                                    labelColor='#8ff', labelFontSize=45,
+                                    tableLabelName="TYRE TEMP", tableLabelFontSize=20, tableLabelColor='#8ff',  tableLabelFontName='Digital-7 Mono',
+                                    transFunc=lambda x: str(int(x-273.15)).rjust(3) if (x > 0) else '--',
+                                    colorTransFunc=lambda x: '#8ff' if (x == '--') else ('#8ff' if (float(x) < 130) else '#f00'))
         
         tyreTempTable.place()
         self.addItem(tyreTempTable)
         
         # Brakes Temp
-        tyreTempTable = TableLabels(master=self, posX=720, posY=575, height=150, width=150, rows=2, columns=2, 
+        tyreTempTable = TableLabels(master=self, posX=700, posY=500, height=225, width=225, rows=2, columns=2, 
                                     dataSource=self.dataSource, dataFieldName="MBRAKETEMPCELSIUS", 
-                                    labelColor='#ff80c0', labelFontSize=35,
-                                    tableLabelName="BRAKE TEMP", tableLabelFontSize=20, tableLabelColor='#ff80c0', tableLabelFontName='Digital-7',
-                                    transFunc=lambda x: int(x) if (x > 0) else '--')
+                                    labelColor='#ff80c0', labelFontSize=45,
+                                    tableLabelName="BRAKE TEMP", tableLabelFontSize=20, tableLabelColor='#ff80c0', tableLabelFontName='Digital-7 Mono',
+                                    transFunc=lambda x: str(int(x)).rjust(3) if (x > 0) else '--',
+                                    colorTransFunc=lambda x: '#ff80c0' if (x == '--') else ('#ff80c0' if (float(x) < 350) else '#f00'))
         
         
         tyreTempTable.place()
         self.addItem(tyreTempTable)
         
         # Oil Temp
-        oilTempLabel = GenericLabel(    master=self, posX=910, posY=580, height=75, width=220, 
-                                        subLabelName="OIL TEMP  ",  subLabelColor='#FF8080', subLabelFontSize=25, subLabelSide=tk.LEFT,   subLabelFontName='Digital-7',
+        oilTempLabel = GenericLabel(    master=self, posX=970, posY=580, height=75, width=260, 
+                                        subLabelName="OIL TEMP   ",  subLabelColor='#FF8080', subLabelFontSize=25, subLabelSide=tk.LEFT, subLabelFontName='Digital-7 Mono',
                                         dataSource=self.dataSource, dataFieldName="MOILTEMPCELSIUS", defaultValue='0', 
-                                        labelFontSize=45, labelColor='#ffc90e',  labelFontName='Digital-7',
-                                        transFunc=lambda x: int(x) if (x > 0) else '--')
+                                        labelFontSize=45, labelColor='#ffc90e',  labelFontName='Digital-7 Mono',
+                                        transFunc=lambda x: str(int(x)).rjust(3) if (x > 0) else '--')
         oilTempLabel.place()
         self.addItem(oilTempLabel)
         
         # Water Temp
-        waterTempLabel = GenericLabel(  master=self, posX=910, posY=640, height=75, width=220, 
-                                        subLabelName="WATER TEMP",  subLabelColor='#FF8080', subLabelFontSize=20, subLabelSide=tk.LEFT,  subLabelFontName='Digital-7',
+        waterTempLabel = GenericLabel(  master=self, posX=970, posY=640, height=75, width=260, 
+                                        subLabelName="WATER TEMP ",  subLabelColor='#FF8080', subLabelFontSize=25, subLabelSide=tk.LEFT, subLabelFontName='Digital-7 Mono',
                                         dataSource=self.dataSource, dataFieldName="MWATERTEMPCELSIUS", defaultValue='0', 
-                                        labelFontSize=45, labelColor='#ffc90e',  labelFontName='Digital-7',
-                                        transFunc=lambda x: int(x) if (x > 0) else '--')
+                                        labelFontSize=45, labelColor='#ffc90e',  labelFontName='Digital-7 Mono',
+                                        transFunc=lambda x: str(int(x)).rjust(3) if (x > 0) else '--')
         waterTempLabel.place()
         self.addItem(waterTempLabel)
         
+        
+        # Pedals
+        #pedalsFontSize       = 35
+        pedalsLabelFontSize  = 25
+        pedalsHeight          = 250
+        pedalsWidth           = 30
+        
+        pX = 1200
+        pY = 320
+        
+        # Throttle
+        pedalBar = BarLabel(    master=self, posX=pX, posY=pY, height=pedalsHeight, width=pedalsWidth, 
+                                subLabelName="T", dataSource=self.dataSource, dataFieldName="MTHROTTLE",
+                                subLabelFontSize=pedalsLabelFontSize, subLabelFontName = 'Digital-7 Mono',
+                                barColor='#80FF80', subLabelColor='#80FF80',
+                                transFunc=lambda x: x*100)   
+        pedalBar.place()
+        self.addItem(pedalBar)
+        
+        # Brake
+        pX = pX - pedalsWidth
+        pedalBar = BarLabel(    master=self, posX=pX, posY=pY, height=pedalsHeight, width=pedalsWidth, 
+                                subLabelName="B", dataSource=self.dataSource, dataFieldName="MBRAKE",
+                                subLabelFontSize=pedalsLabelFontSize, subLabelFontName = 'Digital-7 Mono',
+                                barColor='#FF8080', subLabelColor='#FF8080',
+                                transFunc=lambda x: x*100)   
+        pedalBar.place()
+        self.addItem(pedalBar)
+        
+        # Clutch
+        pX = pX - pedalsWidth
+        pedalBar = BarLabel(    master=self, posX=pX, posY=pY, height=pedalsHeight, width=pedalsWidth, 
+                                subLabelName="C", dataSource=self.dataSource, dataFieldName="MCLUTCH",
+                                subLabelFontSize=pedalsLabelFontSize, subLabelFontName = 'Digital-7 Mono',
+                                barColor='#8080FF', subLabelColor='#8080FF',
+                                transFunc=lambda x: x*100)   
+        pedalBar.place()
+        self.addItem(pedalBar)
+        
+        
+        # Damages
+        
+        # Crash State
+        posX                = 200
+        posY                = 570
+        damHeight           = 40
+        damWidth            = 250
+        damFontSize         = 30
+        damSubFonSize       = 20
+        
+        crashStateLabel = GenericLabel(     master=self, posX=posX, posY=posY, height=damHeight, width=damWidth, 
+                                            subLabelName="CRASH STATE ", subLabelFontSize=damSubFonSize, subLabelColor='#FF8080', subLabelSide=tk.LEFT, labelFontName='Digital-7 Mono',
+                                            dataSource=self.dataSource, dataFieldName="EXT_MCRASHSTATE", defaultValue='0',  subLabelFontName='Digital-7 Mono',
+                                            labelFontSize=damFontSize, labelColor='#ffc90e',
+                                            colorTransFunc=lambda x: '#ffc90e' if (x == 'NONE') else '#f00')
+        crashStateLabel.place()
+        self.addItem(crashStateLabel)
+        
+        # Aero Damage
+        posY = posY + damHeight
+        aeroDamLabel = GenericLabel(    master=self, posX=posX, posY=posY, height=damHeight, width=damWidth, 
+                                        subLabelName="AERO DMG    ", subLabelFontSize=damSubFonSize, subLabelColor='#FF8080', subLabelSide=tk.LEFT, labelFontName='Digital-7 Mono',
+                                        dataSource=self.dataSource, dataFieldName="MAERODAMAGE", defaultValue='0',  subLabelFontName='Digital-7 Mono',
+                                        labelFontSize=damFontSize, labelColor='#ffc90e',
+                                        transFunc=lambda x: '-' if (x < 0) else int(x*100),
+                                        colorTransFunc=lambda x: '#ffc90e' if (x <= 0) else '#f00')
+        aeroDamLabel.place()
+        self.addItem(aeroDamLabel)
+        
+        # Engine Damage
+        posY = posY + damHeight
+        engineDamLabel = GenericLabel(      master=self, posX=posX, posY=posY, height=damHeight, width=damWidth, 
+                                            subLabelName="ENGINE DMG  ", subLabelFontSize=damSubFonSize, subLabelColor='#FF8080', subLabelSide=tk.LEFT, labelFontName='Digital-7 Mono',
+                                            dataSource=self.dataSource, dataFieldName="MENGINEDAMAGE", defaultValue='0',  subLabelFontName='Digital-7 Mono',
+                                            labelFontSize=damFontSize, labelColor='#ffc90e',
+                                            transFunc=lambda x: '-' if (x < 0) else int(x*100),
+                                            colorTransFunc=lambda x: '#ffc90e' if (x <= 0) else '#f00')
+        engineDamLabel.place()
+        self.addItem(engineDamLabel)
+        
+        
+        
+        # Image Example
+#        image = Image.open("../ext-resources/bmw_logo.bmp")
+#        photo = ImageTk.PhotoImage(image)
+#        
+#        l = tk.Label(self, image=photo)
+#        l.image = photo
+#        l.place(x=800, y=130, height=195, width=195)
+        
+
     def addItem(self, item):
         self.widgets.append(item)
         
@@ -256,9 +350,17 @@ class Application(tk.Frame):
         
 class BanWidget(tk.Frame):
     
+    id = 0
+    
+    @staticmethod
+    def getId():
+        BanWidget.id = BanWidget.id + 1
+        return BanWidget.id
+    
     def __init__(self, master=None, posX=0, posY=0, height=10, width=10):
         tk.Frame.__init__(self, master)
         
+        self.id     = BanWidget.getId()
         self.posX   = posX
         self.posY   = posY
         self.height = height
@@ -266,6 +368,8 @@ class BanWidget(tk.Frame):
         
         if(DEBUG):
             self.configure(borderwidth=5, relief=tk.GROOVE)
+            
+    
 
     def place(self):
         tk.Frame.place(self, x=self.posX, y=self.posY, height=self.height, width=self.width)
@@ -408,31 +512,6 @@ class TimeLabel(GenericLabel):
             
             self.labelVar.set('{:02d}:{:02d}:{:03d}'.format(mins, secs, dec))
 
-class DeltaTimeLabel(GenericLabel):
-    def __init__(self, master=None, posX=0, posY=0, height=10, width=10, subLabelName=None, dataSource=None, dataFieldName=None, defaultValue=None, labelFormat=None, labelFontSize=20, subLabelFontSize=5, labelColor='#fff', subLabelColor='#fff', transFunc=None, timeRefFieldName=None, timeFieldName=None):
-        GenericLabel.__init__(  self, master, posX, posY, height, width, subLabelName, dataSource, dataFieldName, defaultValue, labelFormat, labelFontSize, subLabelFontSize, labelColor, subLabelColor, transFunc)
-                                
-        self.timeRefFieldName   = timeRefFieldName
-        self.timeFieldName      = timeFieldName
-        
-    # Update Delta var with Source Times Data
-    def refresh(self):
-        timeRef = self.dataSource.getField(self.timeRefFieldName)
-        time    = self.dataSource.getField(self.timeFieldName)
-        
-        if(timeRef == None or time == None or timeRef == -1):
-            self.labelVar.set("d -.---")
-        else:
-            if(time == -1):
-                deltaTime = -timeRef 
-            else:
-                deltaTime = time - timeRef
-            
-            if(deltaTime >= 0):
-                self.labelVar.set('d +{:.3f}'.format(deltaTime))
-            else:
-                self.labelVar.set('d {:.3f}'.format(deltaTime))
-                
 class BarLabel(BanWidget):
 
     def __init__(self, master=None, posX=0, posY=0, height=10, width=10, subLabelName=None, dataSource=None, dataFieldName=None, defaultValue=None, subLabelFontSize=5, barColor='#0f0', subLabelColor='#fff', subLabelFontName=None, transFunc=None):
@@ -463,12 +542,14 @@ class BarLabel(BanWidget):
         
         s = ttk.Style() # s.theme_names() To show availables
         # print s.theme_names():  ('winnative', 'clam', 'alt', 'default', 'classic', 'vista', 'xpnative')
+        #s.theme_use('classic') 
         s.theme_use('classic') 
 
         # WARN: Posible name colission with severals BarLabels
-        s.configure("barLabel.Vertical.TProgressbar", foreground='green', background=self.barColor, troughcolor ='grey')
+        styleId = 'barLabel_'+str(self.id)+'.Vertical.TProgressbar'
+        s.configure(styleId, foreground='green', background=self.barColor, troughcolor ='#808080')
             
-        self.progressBar = ttk.Progressbar(self, orient='vertical', mode='determinate', variable=self.barVar, style="barLabel.Vertical.TProgressbar")
+        self.progressBar = ttk.Progressbar(self, orient='vertical', mode='determinate', variable=self.barVar, style=styleId)
         
         self.progressBar.pack(fill=tk.BOTH, expand=1)
 
@@ -592,9 +673,19 @@ class PCarsDataSource():
         self.url                = 'http://localhost:8080/getdata'
         self.json_dataFields    = json.dumps({"fields": ["MGEAR", "MRPM", "MSPEED", "MFUELLEVEL", 
                                                          "EXT_MCURRENTTIME",  "MBESTLAPTIME", "EXT_MLASTLAPTIME",
-                                                         "MBOOSTAMOUNT", "MFUELLEVEL", "MTYRELAYERTEMP", "MBRAKETEMPCELSIUS", 
+                                                         "MBOOSTAMOUNT", "MFUELLEVEL", "MTYRETREADTEMP", "MBRAKETEMPCELSIUS", 
                                                          "MCARNAME", "MOILTEMPCELSIUS", "MWATERTEMPCELSIUS",
-                                                         "EXT_MSESSIONSECTORGAP", "EXT_MSESSIONSECTORDELTA", "EXT_MPOSITION"]})
+                                                         "EXT_MSESSIONSECTORGAP", "EXT_MSESSIONSECTORDELTA", "EXT_MPOSITION",
+                                                         "MTHROTTLE", "MCLUTCH", "MBRAKE",
+                                                         "MAERODAMAGE", "MENGINEDAMAGE", "EXT_MCRASHSTATE"]})                                                         
+                                                         
+        self.curl = pycurl.Curl()
+        self.curl.setopt(pycurl.URL, self.url)
+        self.curl.setopt(pycurl.POST, 1)
+        self.curl.setopt(pycurl.POSTFIELDS, self.json_dataFields)
+        
+        if(DEBUG):
+            self.curl.setopt(pycurl.VERBOSE, 1)
         
     def getField(self, fieldName):
         if (self.jsonData == None):
@@ -614,17 +705,13 @@ class PCarsDataSource():
             
         # Option 2: pycurl
         buffer  = StringIO()
-        c       = pycurl.Curl()
-        c.setopt(pycurl.URL, self.url)
-        c.setopt(pycurl.POST, 1)
-        c.setopt(pycurl.POSTFIELDS, self.json_dataFields)
-        c.setopt(c.WRITEDATA, buffer)
-        #c.setopt(pycurl.VERBOSE, 1)
-        c.perform()
+        self.curl.setopt(self.curl.WRITEDATA, buffer)
+        self.curl.perform()
         
         # Update Data Source
         self.jsonData = json.loads(buffer.getvalue())
-        c.close()
+        buffer.close()
+        #c.close()
         #print self.jSonData
         
         return
@@ -636,20 +723,31 @@ class PCarsDataSource():
 #        time.sleep(DATA_REFRESH_DELAY_MILLIS/1000)
         
 def refreshGui():
-    #start = time.time()
-    DATA.update()
-    #print("Time Get Data : "+ str(time.time()-start))
     
-    #start = time.time()
+    # Data refresh
+    if(DEBUG):
+        start = time.time()
+        
+    DATA.update()
+    
+    if(DEBUG):
+        print("Time Get Data : "+ str(time.time()-start))
+    
+    if(DEBUG):
+        start = time.time()
+        
+    # Gui refresh
     GUI.refresh()
-    #print("Time Refresh Gui : "+ str(time.time()-start))
+    
+    if(DEBUG):
+        print("Time Refresh Gui : "+ str(time.time()-start))
     
     GUI.after(GUI_REFRESH_DELAY_MILLIS, refreshGui)
     
         
 
 # Constants 
-GUI_REFRESH_DELAY_MILLIS = 10
+GUI_REFRESH_DELAY_MILLIS = 50
 
 # Global Vars
 GUI     = None
