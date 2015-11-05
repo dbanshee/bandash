@@ -80,7 +80,7 @@ class Application(tk.Frame):
         
         #Rpms
         rpmLabel = GenericLabel(    master=self, posX=95, posY=20, height=50, width=280, 
-                                    subLabelName="RPM ", subLabelFontSize=35, subLabelColor='#80FF00', subLabelSide=tk.LEFT, labelFontName='Digital-7 Mono',
+                                    subLabelName="RPM ", subLabelFontSize=35, subLabelColor='#80FF80', subLabelSide=tk.LEFT, labelFontName='Digital-7 Mono',
                                     dataSource=self.dataSource, dataFieldName="MRPM", defaultValue='0',  subLabelFontName='Digital-7 Mono',
                                     labelFontSize=50, labelColor='#ffc90e',
                                     transFunc=lambda x: str(int(round(x))).rjust(5))
@@ -101,7 +101,7 @@ class Application(tk.Frame):
         fuelBar = BarLabel(     master=self, posX=85, posY=560, height=150, width=82, 
                                 subLabelName="FUEL", dataSource=self.dataSource, dataFieldName="MFUELLEVEL",
                                 subLabelFontSize=25, subLabelFontName = 'Digital-7 Mono',
-                                barColor='#804040', subLabelColor='#80FF00',
+                                barColor='#804040', subLabelColor='#804040',
                                 transFunc=lambda x: x*100)   
                                 
                                     
@@ -111,7 +111,7 @@ class Application(tk.Frame):
         
         # Session Info
         posLabel = GenericLabel(    master=self, posX=775, posY=20, height=80, width=250, 
-                                    subLabelName="POS", subLabelFontSize=40, subLabelColor='#80FF00', subLabelSide=tk.LEFT, labelFontName='Digital-7 Mono',
+                                    subLabelName="POS", subLabelFontSize=40, subLabelColor='#80FF80', subLabelSide=tk.LEFT, labelFontName='Digital-7 Mono',
                                     dataSource=self.dataSource, dataFieldName="EXT_MPOSITION", defaultValue='0',  subLabelFontName='Digital-7 Mono',
                                     labelFontSize=50, labelColor='#ffc90e',)
         posLabel.place()
@@ -144,7 +144,7 @@ class Application(tk.Frame):
         lastTimeLabel = TimeLabel(  master=self, posX=pX, posY=pY, height=timeHeight, width=timeWidth, 
                                     subLabelName="LAST LAP TIME", dataSource=self.dataSource, dataFieldName="EXT_MLASTLAPTIME",
                                     labelFontSize=timesFontSize, subLabelFontSize=timesLabelFontSize,  labelFontName='Digital-7 Mono',
-                                    subLabelColor='#0f0', condColor="#0f0")
+                                    subLabelColor='#80FF80', condColor="#80FF80")
                                     
         lastTimeLabel.place()
         self.addItem(lastTimeLabel)
@@ -172,7 +172,7 @@ class Application(tk.Frame):
         batteryBar = BarLabel(  master=self, posX=10, posY=10, height=700, width=70, 
                                 subLabelName="BAT", dataSource=self.dataSource, dataFieldName="MBOOSTAMOUNT",
                                 subLabelFontSize=25, subLabelFontName = 'Digital-7 Mono',
-                                barColor='#80FF80', subLabelColor='#80FF00')
+                                barColor='#80FF80', subLabelColor='#80FF80')
                                     
         batteryBar.place()
         self.addItem(batteryBar)
@@ -306,7 +306,7 @@ class Application(tk.Frame):
         # Aero Damage
         posY = posY + damHeight
         aeroDamLabel = GenericLabel(    master=self, posX=posX, posY=posY, height=damHeight, width=damWidth, 
-                                        subLabelName="AERO DMG    ", subLabelFontSize=damSubFonSize, subLabelColor='#FF8080', subLabelSide=tk.LEFT, labelFontName='Digital-7 Mono',
+                                        subLabelName="AERO   DMG  ", subLabelFontSize=damSubFonSize, subLabelColor='#FF8080', subLabelSide=tk.LEFT, labelFontName='Digital-7 Mono',
                                         dataSource=self.dataSource, dataFieldName="MAERODAMAGE", defaultValue='0',  subLabelFontName='Digital-7 Mono',
                                         labelFontSize=damFontSize, labelColor='#ffc90e',
                                         transFunc=lambda x: '-' if (x < 0) else int(x*100),
@@ -562,7 +562,6 @@ class BarLabel(BanWidget):
             self.subLabel   = tk.Label(self, text=self.subLabelName, background='#000', foreground=self.subLabelColor, font=subLabelFont)
             #self.subLabel.pack(fill=tk.BOTH, expand=1)
             self.subLabel.pack(fill=tk.X)
-            print self.subLabelName
 
             if(DEBUG):
                 self.subLabel.configure(borderwidth=5, relief=tk.GROOVE)
